@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 
 if __name__ == '__main__':
     vectorstore = get_vectorstore()
-    qa_chain = get_qa_chain(vectorstore)
+    qa_chain = get_qa_chain(vectorstore, rerank='cross')
 
     while True:
         question = input("Ваш вопрос: ")

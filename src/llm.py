@@ -10,7 +10,7 @@ from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 
 
 load_dotenv()
-os.environ["GOOGLE_API_KEY"] = "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" #os.getenv("GOOGLE_API_KEY")
+os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
 
 
 def get_qa_chain(vectorstore, top_k=30, rerank=None, rank_fraction=0.5):

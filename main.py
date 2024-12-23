@@ -1,6 +1,6 @@
 from src.chroma import get_vectorstore
 from src.llm import get_qa_chain
-from src.royallib import get_book_and_vector_store
+from src.royallib import get_book_and_vector_store, connect_to_existing_vectorstore
 import warnings
 
 
@@ -17,6 +17,7 @@ if __name__ == '__main__':
         author_name=author_name,
         download_directory="./books_library/"
     )
+    vectorstore = connect_to_existing_vectorstore()
     qa_chain = get_qa_chain(vectorstore, rerank='cross')
 
     # vectorstore = get_vectorstore()

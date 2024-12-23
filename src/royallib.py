@@ -292,3 +292,30 @@ def get_book_and_vector_store(book_name, author_name, download_directory="./book
         persist_directory="./chroma_db/"
     )
     return vectorstore
+
+
+def connect_to_existing_vectorstore(collection_name="book_with_headers", persist_directory="./chroma_db/"):
+    """
+    Подключается к существующей векторизированной базе данных Chroma.
+    
+    Args:
+        collection_name (str): Название коллекции
+        persist_directory (str): Путь к директории с базой данных
+        
+    Returns:
+        Chroma: Объект векторного хранилища
+    """
+    logger = setup_logging()
+    
+    try:
+        vectorstore = Chroma(
+            collection_name=collection_name,
+            embedding_function=get_emb_model(),
+            persist_directory=persist_directory
+        )
+        logger.info(f"Успешно подключено к существующей базе данных: {collection_name}")
+        return vectorstore
+        
+    except Exception as e:
+        logger.error(f"Ошибка при подключении к базе данных: {str(e)}")
+        raise

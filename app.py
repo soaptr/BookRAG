@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from src.royallib import get_book_and_vector_store, connect_to_existing_vectorstore
 from src.chroma import get_vectorstore
 from src.llm import get_qa_chain
 
@@ -9,7 +10,7 @@ from src.llm import get_qa_chain
 app = FastAPI()
 
 # Инициализация
-vectorstore = get_vectorstore()
+vectorstore = connect_to_existing_vectorstore() #get_vectorstore()
 qa_chain = get_qa_chain(vectorstore, rerank='cross')
 
 # Местоположение шаблонов
@@ -35,8 +36,9 @@ async def ask_question(request: QuestionRequest):
     # Формирование списка источников
     source_list = []
     for source in sources:
-        book_title = source.metadata.get('book_title', 'Unknown')
-        chapter_title = source.metadata.get('chapter_title', 'Unknown')
-        source_list.append(f"{book_title}, {chapter_title}")
+        # book_title = source.metadata.get('book_title', 'Unknown')
+        # chapter_title = source.metadata.get('chapter_title', 'Unknown')
+        context = source.metadata.get("headers", [])
+        source_list.append(f"{context}")
 
     return {"answer": answer, "sources": source_list}

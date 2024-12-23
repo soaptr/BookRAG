@@ -16,8 +16,7 @@ def get_emb_model(model_name="intfloat/multilingual-e5-large-instruct"):
     Returns:
         HuggingFaceEmbeddings: Объект модели для генерации эмбеддингов.
     """
-    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    device = torch.device('cuda')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
     
     model_kwargs = {'device': device}
